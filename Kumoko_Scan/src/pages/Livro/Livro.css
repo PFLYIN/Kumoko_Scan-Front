@@ -1,0 +1,9 @@
+.livros {
+    padding: 2rem;
+}
+
+.livro-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

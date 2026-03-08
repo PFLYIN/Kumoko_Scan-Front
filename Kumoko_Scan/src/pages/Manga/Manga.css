@@ -1,0 +1,9 @@
+.manga {
+    padding: 2rem;
+}
+
+.manga-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
