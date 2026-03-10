@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import logo from "../../assets/kumoko_logo.png";
+
 
 function Header({ onSearch }) {
     const [query, setQuery] = useState('');
@@ -12,10 +14,11 @@ function Header({ onSearch }) {
 
     return (
         <header className="header">
+          <div className="header-container">
             <div className="header-logo">
-                <span className="kumoko-logo">AAAA</span>
-                <h1>Kumoko<span>Scan</span></h1>
+                <img src={logo} alt="Kumoko Scan" className="logo-img" />
             </div>
+          </div>
             
             <form className="barra-pesquisa" onSubmit={handleSubmit}>
                 <input
