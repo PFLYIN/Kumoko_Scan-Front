@@ -1,1 +1,1 @@
-    export { default } from './Herder';
+    export { default } from './Header';
