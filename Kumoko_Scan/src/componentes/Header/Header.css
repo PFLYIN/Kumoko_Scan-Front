@@ -1,41 +1,36 @@
-/* HEADER BASE */
-
 .site-header{
     width:100%;
     background:#ffffff;
-    border-bottom:1px solid #e5e5e5;
     position:sticky;
     top:0;
     z-index:100;
 }
 
-/* CONTAINER */
-
 .header-container{
-    max-width:1200px;
-    margin:auto;
+    max-width:1500px;
+    margin:0 auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:18px 40px;
+    padding:3px 50px;
 }
-
-
-/* LOGO */
 
 .logo img{
-    height:60px;
+    height:80px;
+    display:block;
 }
 
-/* NAV */
+.logo{
+    margin:0;
+    padding:0;
+    flex-shrink:0;
+}
 
 .main-nav{
     display:flex;
     align-items:center;
     gap:28px;
 }
-
-/* MENU */
 
 .main-nav ul{
     display:flex;
@@ -46,16 +41,14 @@
 .main-nav ul li a{
     text-decoration:none;
     color:#333;
-    font-size:15px;
-    font-weight:500;
-    transition:0.25s;
+    font-size: 16px;
+    font-weight: 500;
+    transition: 0.25s;
 }
 
 .main-nav ul li a:hover{
     color:#e53935;
 }
-
-/* SEARCH */
 
 .search-box{
     display:flex;
@@ -75,8 +68,6 @@
     color:#e53935;
 }
 
-/* DONATE BUTTON */
-
 .donate-btn{
     background:#e53935;
     border:none;
@@ -92,8 +83,6 @@
 .donate-btn:hover{
     background:#c62828;
 }
-
-/* RESPONSIVO */
 
 @media (max-width:1000px){
 
