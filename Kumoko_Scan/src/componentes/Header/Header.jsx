@@ -22,7 +22,7 @@ function Header({ onSearch }) {
 
 <ul>
 <li><Link to="/">Home</Link></li>
-<li><Link to="/">Mangás</Link></li>
+<li><Link to="/mangas">Mangás</Link></li>
 <li><Link to="/">Livros</Link></li>
 <li><Link to="/">Projetos</Link></li>
 <li><Link to="/">Sobre</Link></li>
