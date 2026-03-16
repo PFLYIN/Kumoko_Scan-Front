@@ -1,45 +1,42 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import "./Header.css";
-import logo from "../../assets/kumoko_logo.png";
+import React from 'react';
 
+function Header() {
+  return (
+    <header className="sticky top-0 z-50 w-full bg-[#0f111a]/70 backdrop-blur-lg border-b border-indigo-500/10 px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
+        
+        {/* Logo Delicada */}
+        <div className="flex items-center gap-3 shrink-0">
+          <h1 className="text-xl tracking-[0.2em] text-zinc-100 font-light">
+            KUMOKO<span className="text-indigo-400 font-medium ml-1">SCAN</span>
+          </h1>
+        </div>
 
-function Header({ onSearch }) {
-    const [query, setQuery] = useState('');
+        {/* Barra de Pesquisa "Vidro Fumê" */}
+        <div className="flex-1 max-w-lg relative group">
+          <input 
+            type="text" 
+            placeholder="O que você quer ler hoje?" 
+            className="w-full bg-white/5 border border-white/5 rounded-full px-6 py-2.5 text-sm text-zinc-200 placeholder-zinc-500 outline-none focus:border-indigo-400/50 focus:bg-white/10 transition-all duration-500"
+          />
+          {/* Botão de busca transformado em um ícone sutil ou texto fino */}
+          <button className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-medium tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">
+            BUSCAR
+          </button>
+        </div>
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (onSearch) onSearch(query);
-    };
-
-    return (
-        <header className="site-header">
-            <div className="header-container">
-                <div className="logo">
-                    <img src={logo} alt="kumoko_logo.png" />
-                </div>
-  <nav className="main-nav">
-
-<ul>
-<li><Link to="/">Home</Link></li>
-<li><Link to="/mangas">Mangás</Link></li>
-<li><Link to="/">Livros</Link></li>
-<li><Link to="/">Projetos</Link></li>
-<li><Link to="/">Sobre</Link></li>
-<li><Link to="/">Contato</Link></li>
-</ul>
-
-<div className="search-box">
-<span>Search</span>
-<i className="fas fa-search"></i>
-</div>
-
-<button className="donate-btn">Donate</button>
-
-</nav>
-            </div>
-        </header>
-    );
+        {/* Menu Minimalista */}
+        <nav className="hidden lg:block">
+          <ul className="flex gap-8 text-xs tracking-widest text-zinc-400 font-medium">
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">INÍCIO</li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">MANGÁ</li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">LIVROS</li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">COMUNIDADE</li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  );
 }
 
 export default Header;
