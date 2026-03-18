@@ -31,6 +31,7 @@ function Header() {
             <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">INÍCIO</li>
             <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">MANGÁ</li>
             <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">LIVROS</li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">PROJETOS</li>
             <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">COMUNIDADE</li>
           </ul>
         </nav>
