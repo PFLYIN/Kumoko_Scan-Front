@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -28,11 +29,24 @@ function Header() {
         {/* Menu Minimalista */}
         <nav className="hidden lg:block">
           <ul className="flex gap-8 text-xs tracking-widest text-zinc-400 font-medium">
-            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">INÍCIO</li>
-            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">MANGÁ</li>
-            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">LIVROS</li>
-            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">PROJETOS</li>
-            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">COMUNIDADE</li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="/">INÍCIO</Link>
+            </li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="/manga">MANGÁ</Link>
+            </li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="/livros">LIVROS</Link>
+            </li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="#">PROJETOS</Link>
+            </li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="#">COMUNIDADE</Link>
+            </li>
+            <li className="hover:text-indigo-300 cursor-pointer transition-all duration-300 hover:-translate-y-0.5">
+              <Link to="/login">LOGIN</Link>
+            </li>
           </ul>
         </nav>
       </div>
