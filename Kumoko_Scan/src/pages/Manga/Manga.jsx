@@ -1,89 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import api from '../../service/api';
 import './Manga.css';
-import { CardManga } from '../../componentes';
-
-// import images from assets so Vite can process them
-import MatoSlave from '../../assets/manga/Mato_Seihei_no_Slave.jpg';
-import MakeHeroine from '../../assets/manga/Make_Heroine_o_Katasetai!!.jpg';
-import BlueUrsus from '../../assets/manga/Blue_Ursus.jpg';
-import Bouken from '../../assets/manga/Boukensha_ni_Naritai_to_Miyako_ni.jpg';
-import Dandadan from '../../assets/manga/Dandadan.jpg';
-import Haimiya from '../../assets/manga/Haimiya-senpai wa_Kowakute_Kawaii.jpg';
-import IsekaiCheat from '../../assets/manga/Isekai_de_Cheat_Skill_wo_Te_ni.jpg';
-import MariaDanzai from '../../assets/manga/Maria_no_Danzai.jpg';
-import TenseiDragon from '../../assets/manga/Tensei_Shitara_Dragon_no_Tamago_datta.jpg';
-import YuGiOh from '../../assets/manga/Yu☆Gi☆Oh.jpg';
 
 function Manga() {
-    const mangas = [
-        {
-            titulo: 'Mato Seihei no Slave',
-            imagem: MatoSlave,
-            descricao: 'Aventura dos piratas.'
-        },
-        {
-            titulo: 'Make Heroine o Katsetai!!',
-            imagem: MakeHeroine,
-            descricao: 'História de ninjas.'
-        },
-        {
-            titulo: 'Blue Ursus',
-            imagem: BlueUrsus,
-            descricao: 'Mistério sobrenatural e sideral.'
-        },
-        {
-            titulo: 'Boukensha ni Naritai to Miyako ni',
-            imagem: Bouken,
-            descricao: 'Jornada de uma garota rumo à cidade dos aventureiros.'
-        },
-        {
-            titulo: 'Dandadan',
-            imagem: Dandadan,
-            descricao: 'Aventura sobrenatural e comédia.'
-        },
-        {
-            titulo: 'Haimiya-senpai wa Kowakute Kawaii',
-            imagem: Haimiya,
-            descricao: 'Comédia romântica escolar estranha.'
-        },
-        {
-            titulo: 'Isekai de Cheat Skill wo Te ni',
-            imagem: IsekaiCheat,
-            descricao: 'Um estudante ganha habilidades em outro mundo.'
-        },
-        {
-            titulo: 'Maria no Danzai',
-            imagem: MariaDanzai,
-            descricao: 'Drama sombrio e suspense.'
-        },
-        {
-            titulo: 'Tensei Shitara Dragon no Tamago datta',
-            imagem: TenseiDragon,
-            descricao: 'Reencarnação como ovo de dragão.'
-        },
-        {
-            titulo: 'Yu☆Gi☆Oh',
-            imagem: YuGiOh,
-            descricao: 'Clássico dos jogos de cartas e aventura.'
-        }
-    ];
+  const [mangas, setMangas] = useState([]);
 
-    return (
-        <div className="manga">
-            <h1>Página de Mangás</h1>
-            <p>Aqui você encontra todos os mangás disponíveis.</p>
-            <div className="manga-list">
-                {mangas.map((manga, index) => (
-                    <CardManga
-                        key={index}
-                        titulo={manga.titulo}
-                        imagem={manga.imagem}
-                        descricao={manga.descricao}
-                    />
-                ))}
-            </div>
+  useEffect(() => {
+    const buscarMangas = async () => {
+      try {
+        const res = await api.get('/mangas');
+        setMangas(res.data.dados || res.data);
+      } catch (error) {
+        console.error("Erro ao buscar catálogo:", error);
+      }
+    };
+    buscarMangas();
+  }, []);
+
+  return (
+    <div className="container-catalogo">
+      <div className="catalog-header">
+        <div>
+          <h2>Catálogo de Mangás</h2>
+          <p className="catalog-subtitle">Explore sua biblioteca de mangás e gerencie capítulos de forma rápida.</p>
         </div>
-    );
+
+        <Link to="/manga/novo" className="btn-acao">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Criar Mangá
+        </Link>
+      </div>
+
+      <div className="grid-mangas">
+        {mangas.map(manga => (
+          <div key={manga.id} className="card-manga">
+            <div className="card-image-wrap">
+              {manga.capa_url ? (
+                <img 
+                  src={`http://localhost:3000/files/${manga.capa_url.replace(/\\/g, '/').split('uploads/')[1]}`} 
+                  alt={`Capa ${manga.nome}`} 
+                  className="img-capa"
+                />
+              ) : (
+                <div className="sem-capa">Sem Capa</div>
+              )}
+            </div>
+
+            <div className="card-content">
+              <div>
+                <h3>{manga.nome}</h3>
+                {manga.volume && <span className="card-badge">Vol. {manga.volume}</span>}
+              </div>
+              <Link to={`/manga/${manga.id}/capitulos`} className="btn-abrir">
+                📂 Ver Capítulos
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Manga;

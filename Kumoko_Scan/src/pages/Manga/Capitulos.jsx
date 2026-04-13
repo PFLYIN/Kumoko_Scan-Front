@@ -60,6 +60,9 @@ function Capitulos() {
       <Link to="/mangas" className="btn-voltar">⬅ Voltar ao Catálogo</Link>
       
       <h2>Gerenciar Capítulos</h2>
+      <div className="section-intro">
+        <p>Gerencie os capítulos do mangá e anexe páginas direto aqui. Tudo preparado para criar e revisar com facilidade.</p>
+      </div>
       
       <form onSubmit={handleCriarCapitulo} className="form-criar-capitulo">
         <input type="number" placeholder="Nº Cap" value={numCap} onChange={e => setNumCap(e.target.value)} />
@@ -71,10 +74,14 @@ function Capitulos() {
         {capitulos.map(cap => (
           <li key={cap.id} className="item-capitulo">
             <div className="info-capitulo">
-              <strong>Capítulo {cap.numero}</strong> {cap.titulo && `- ${cap.titulo}`}
+              <strong>Capítulo {cap.numero}</strong>
+              {cap.titulo && <span> - {cap.titulo}</span>}
             </div>
             <div className="acoes-capitulo">
-              <input type="file" accept="image/*" onChange={(e) => handleAnexarPagina(e, cap.id)} />
+              <label className="btn-upload">
+                📎 Anexar página
+                <input type="file" accept="image/*" onChange={(e) => handleAnexarPagina(e, cap.id)} />
+              </label>
               <button onClick={() => handleLerCapitulo(cap.id)} className="btn-ler">📖 Ler</button>
             </div>
           </li>

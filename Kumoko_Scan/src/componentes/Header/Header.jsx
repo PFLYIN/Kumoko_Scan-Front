@@ -70,26 +70,6 @@ function Header() {
           </div>
         </div>
       </div>
-
-      {/* 2. BARRA SECUNDÁRIA: UPLOAD (Aparece embaixo do header só para quem está logado) */}
-      {isLogged && (
-        <div className="w-full bg-[#0b0c10]/95 backdrop-blur-md border-b border-white/5 px-6 py-2 flex justify-center lg:justify-end">
-          <div className="max-w-7xl w-full flex justify-end gap-6">
-            <a href="/manga/novo" className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-indigo-400 hover:text-indigo-300 transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              CRIAR MANGÁ
-            </a>
-            <a href="/livro/novo" className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-indigo-400 hover:text-indigo-300 transition-colors">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              CRIAR LIVRO
-            </a>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
