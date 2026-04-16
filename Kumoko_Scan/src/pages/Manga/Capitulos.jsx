@@ -4,9 +4,8 @@ import api from '../../service/api';
 import './Capitulos.css';
 
 function Capitulos() {
-  // Pega o ID que está lá na barra de endereços do navegador!
-  const { mangaId } = useParams(); 
-  
+  const { mangaId } = useParams();
+
   const [capitulos, setCapitulos] = useState([]);
   const [numCap, setNumCap] = useState('');
   const [tituloCap, setTituloCap] = useState('');
@@ -20,7 +19,7 @@ function Capitulos() {
 
   useEffect(() => {
     carregarCapitulos();
-  }, [mangaId]); // Recarrega se o ID da URL mudar
+  }, [mangaId]);
 
   const handleCriarCapitulo = async (e) => {
     e.preventDefault();

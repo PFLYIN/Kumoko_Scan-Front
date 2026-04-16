@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 function Header() {
-  // Simulando o contexto global (troque para false para ver os botões de Entrar/Cadastrar)
-  const [isLogged, setIsLogged] = useState(true); 
+  const { user, authenticated, logout } = useContext(AuthContext);
 
   return (
     <header className="sticky top-0 z-50 w-full flex flex-col shadow-lg shadow-black/20">
-      
-      {/* 1. BARRA PRINCIPAL */}
+
       <div className="w-full bg-[#0f111a]/95 backdrop-blur-xl border-b border-indigo-500/10 px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-8">
-          
-          {/* Logo */}
           <div className="flex items-center gap-3 shrink-0">
             <h1 className="text-xl tracking-[0.2em] text-zinc-100 font-light uppercase">
               Kumoko<span className="text-indigo-400 font-medium ml-1">Scan</span>
             </h1>
           </div>
 
-          {/* Menu de Navegação Principal (Exatamente como você pediu) */}
           <nav className="hidden lg:flex flex-1 justify-center">
             <ul className="flex gap-8 text-[11px] tracking-[0.15em] text-zinc-400 font-bold uppercase">
               <li className="hover:text-indigo-300 cursor-pointer transition-colors"><a href="/">Home</a></li>
@@ -29,10 +25,7 @@ function Header() {
             </ul>
           </nav>
 
-          {/* Lado Direito: Pesquisa e Usuário */}
           <div className="flex items-center gap-6">
-            
-            {/* Barra de Pesquisa Gelatinosa */}
             <div className="hidden md:block relative group">
               <input 
                 type="text" 
@@ -46,19 +39,22 @@ function Header() {
               </button>
             </div>
 
-            {/* Divisor vertical */}
             <div className="hidden lg:block h-6 w-px bg-white/10"></div>
 
-            {/* Área do Usuário (Para cumprir a rubrica de Edição e Login) */}
-            {isLogged ? (
+            {authenticated ? (
               <div className="flex items-center gap-4">
                 <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-zinc-200">Pedro</p>
-                  {/* Link para a página onde o usuário vai validar/editar senha e CPF */}
-                  <a href="/perfil" className="text-[10px] uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">Editar Perfil</a>
+                  <p className="text-xs font-bold text-zinc-200">{user?.nome}</p>
+
+                  <div className="flex gap-2 justify-end mt-1">
+                    <a href="/perfil" className="text-[10px] uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">Perfil</a>
+                    <span className="text-zinc-600 text-[10px]">|</span>
+                    <button onClick={logout} className="text-[10px] uppercase tracking-widest text-red-400 hover:text-red-300 transition-colors cursor-pointer">Sair</button>
+                  </div>
                 </div>
+
                 <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold cursor-pointer ring-2 ring-transparent hover:ring-indigo-400 transition-all shadow-lg shadow-indigo-500/20">
-                  P
+                  {user?.nome ? user.nome.charAt(0).toUpperCase() : 'U'}
                 </div>
               </div>
             ) : (

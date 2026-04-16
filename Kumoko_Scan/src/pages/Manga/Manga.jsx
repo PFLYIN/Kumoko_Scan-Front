@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../../service/api';
 import './Manga.css';
 
 function Manga() {
   const [mangas, setMangas] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const buscarMangas = async () => {
@@ -17,6 +18,23 @@ function Manga() {
     };
     buscarMangas();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza que deseja deletar este mangá?')) {
+      try {
+        const token = localStorage.getItem('token');
+        await api.delete(`/mangas/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setMangas(mangas.filter(manga => manga.id !== id));
+        alert('Mangá deletado com sucesso!');
+      } catch (error) {
+        alert('Erro ao deletar mangá. Verifique se você está logado.');
+      }
+    }
+  };
 
   return (
     <div className="container-catalogo">
@@ -54,9 +72,17 @@ function Manga() {
                 <h3>{manga.nome}</h3>
                 {manga.volume && <span className="card-badge">Vol. {manga.volume}</span>}
               </div>
-              <Link to={`/manga/${manga.id}/capitulos`} className="btn-abrir">
-                📂 Ver Capítulos
-              </Link>
+              <div className="card-actions">
+                <Link to={`/manga/${manga.id}/capitulos`} className="btn-abrir">
+                  📂 Ver Capítulos
+                </Link>
+                <Link to={`/manga/${manga.id}/editar`} className="btn-editar">
+                  ✏️ Editar
+                </Link>
+                <button onClick={() => handleDelete(manga.id)} className="btn-deletar">
+                  🗑️ Deletar
+                </button>
+              </div>
             </div>
           </div>
         ))}

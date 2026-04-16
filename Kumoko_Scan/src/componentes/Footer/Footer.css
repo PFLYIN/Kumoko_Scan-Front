@@ -6,13 +6,11 @@
     display:flex;
     flex-direction:column;
     gap:18px;
-    z-index:9999; /* ensure on top of everything */
-    background:rgba(0,0,0,0.3); /* temporary visible background */
-    padding:8px; /* spacing around icons */
+    z-index:9999;
+    background:rgba(0,0,0,0.3);
+    padding:8px;
     border-radius:8px;
 }
-
-/* LINKS */
 
 .social-link{
     width:38px;
@@ -31,8 +29,6 @@
 
     transition:all 0.3s ease;
 }
-
-/* HOVER */
 
 .social-link:hover{
     background:#e53935;

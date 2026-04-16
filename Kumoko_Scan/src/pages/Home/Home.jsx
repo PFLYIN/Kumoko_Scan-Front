@@ -1,16 +1,13 @@
 import React from 'react';
-import destaque from "../../assets/kumoko_logo.png"; // Use uma imagem bonita e em alta qualidade
+import destaque from "../../assets/kumoko_logo.png";
 
 function Home() {
   return (
     <div className="min-h-screen bg-[#0b0c10] text-zinc-200 font-sans">
-      
-      {/* Hero Section - Visual "Cinemático" */}
       <section 
         className="relative h-[50vh] flex flex-col justify-center items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${destaque})` }}
       >
-        {/* Degradê muito suave: do topo escuro (para o header aparecer) até a base escura (para mesclar com a página) */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0f111a]/80 via-transparent to-[#0b0c10]"></div>
         <div className="absolute inset-0 bg-[#0b0c10]/40 backdrop-blur-[2px]"></div>
         
@@ -30,7 +27,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Grid de Lançamentos - Clean e Organizado */}
       <section className="max-w-6xl mx-auto py-24 px-6">
         <div className="flex items-center gap-4 mb-12">
           <div className="h-[1px] w-8 bg-indigo-500/50"></div>
@@ -40,7 +36,6 @@ function Home() {
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-          {/* Exemplo de Card Delicado (Você pode mover isso para o seu CardLivro depois) */}
           {[1, 2, 3, 4, 5].map((item) => (
             <div key={item} className="group cursor-pointer flex flex-col gap-3">
               <div className="relative aspect-[2/3] overflow-hidden rounded-lg shadow-lg shadow-black/20 ring-1 ring-white/5 transition-all duration-500 group-hover:-translate-y-2 group-hover:ring-indigo-500/30 group-hover:shadow-indigo-500/10">

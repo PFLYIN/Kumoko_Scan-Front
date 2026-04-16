@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../service/api';
 import './CriarManga.css';
 
@@ -6,70 +7,87 @@ function CriarManga() {
   const [nome, setNome] = useState('');
   const [volume, setVolume] = useState('');
   const [capa, setCapa] = useState(null);
+  const navigate = useNavigate();
 
-  const handleCriarManga = async (e) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("Acesso restrito! Por favor, faça login.");
+      navigate('/auth');
+    }
+  }, [navigate]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!nome || !volume) return alert("Preencha o nome e o volume!");
+    const token = localStorage.getItem('token');
 
     const formData = new FormData();
     formData.append('nome', nome);
-    formData.append('volume', Number(volume));
-    
-    // Tem que bater exatamente com o nome que está no seu multer do Back-end
-    if (capa) {
-      formData.append('cover_image', capa); 
-    }
+    formData.append('volume', volume);
+    formData.append('capa', capa);
 
     try {
-      await api.post('/mangas', formData);
-      alert('Mangá cadastrado com sucesso!');
+      await api.post('/mangas', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      alert('Manga lançado com sucesso na Kumoko Scan! 🕷️');
       setNome('');
       setVolume('');
       setCapa(null);
-      // Se quiser, depois pode usar o useNavigate do react-router para jogar o usuário pra tela de Mangás aqui!
-    } catch (erro) {
-      console.error('Erro ao criar mangá:', erro);
-      alert('Erro ao cadastrar. Verifique o console.');
+    } catch (error) {
+      alert("Erro ao lançar obra. Verifique se você ainda está logado.");
     }
   };
 
   return (
-    <div className="container-criar-manga">
-      <h2>Cadastrar Novo Mangá</h2>
-      
-      <form onSubmit={handleCriarManga} className="form-criar-manga">
-        <div className="grupo-input">
-          <label>Nome do Mangá:</label>
-          <input 
-            type="text" 
-            value={nome} 
-            onChange={e => setNome(e.target.value)} 
-            placeholder="Ex: Kumo Desu ga, Nani ka?" 
-          />
-        </div>
-
-        <div className="grupo-input">
-          <label>Volume:</label>
-          <input 
-            type="number" 
-            value={volume} 
-            onChange={e => setVolume(e.target.value)} 
-            placeholder="Ex: 1" 
-          />
-        </div>
-
-        <div className="grupo-input">
-          <label>Capa do Mangá:</label>
-          <input 
-            type="file" 
-            accept="image/*" 
-            onChange={e => setCapa(e.target.files[0])} 
-          />
-        </div>
-
-        <button type="submit" className="btn-salvar">Salvar Mangá</button>
-      </form>
-    </div>
+    <main className="auth-main">
+      <div className="auth-wrapper" style={{ justifyContent: 'center' }}>
+        <section className="auth-right">
+          <div className="auth-card">
+            <div className="tab-panel">
+              <h3 className="card-title">Lançar Nova Obra</h3>
+              
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <input 
+                    type="text" 
+                    placeholder="Nome do Mangá" 
+                    value={nome} 
+                    onChange={e => setNome(e.target.value)} 
+                    required 
+                  />
+                </div>
+                <div className="field">
+                  <input 
+                    type="number" 
+                    placeholder="Volume" 
+                    value={volume} 
+                    onChange={e => setVolume(e.target.value)} 
+                    required 
+                  />
+                </div>
+                <div className="field">
+                   <label style={{color: '#8b9bb4', fontSize: '12px', marginBottom: '5px', display: 'block'}}>Capa do Mangá</label>
+                  <input 
+                    type="file" 
+                    onChange={e => setCapa(e.target.files[0])} 
+                    accept="image/*" 
+                    required 
+                    style={{ color: '#fff' }}
+                  />
+                </div>
+                
+                <button type="submit" className="btn-primary">Cadastrar Mangá</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
 

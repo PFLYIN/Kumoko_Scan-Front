@@ -1,13 +1,9 @@
-/* =========================================
-   FORMULÁRIO DE CRIAR LIVRO (Glassmorphism)
-   ========================================= */
-
 .container-criar-livro {
     max-width: 600px;
     margin: 80px auto;
     padding: 40px;
     background: rgba(15, 17, 26, 0.95);
-    border: 1px solid rgba(139, 92, 246, 0.2); /* Borda sutil roxa */
+    border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
@@ -69,7 +65,7 @@
 .btn-salvar-livro {
     margin-top: 15px;
     padding: 14px;
-    background: linear-gradient(90deg, #9333ea, #7c3aed); /* Gradiente Roxo forte */
+    background: linear-gradient(90deg, #9333ea, #7c3aed);
     color: white;
     border: none;
     border-radius: 12px;

@@ -80,7 +80,7 @@
     color:white;
     z-index:2;
     max-width:800px;
-    padding:0 20px; /* keep some space from right edge */
+    padding:0 20px;
 }
 
 .hero-content h1{

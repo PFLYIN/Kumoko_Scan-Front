@@ -1,4 +1,3 @@
-/* src/pages/Manga/Manga.css */
 .container-catalogo {
     max-width: 1200px;
     margin: 50px auto;
@@ -111,6 +110,51 @@
     padding: 22px;
     display: grid;
     gap: 18px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-editar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #f59e0b;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.btn-editar:hover {
+    background: #d97706;
+    transform: translateY(-1px);
+}
+
+.btn-deletar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ef4444;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.btn-deletar:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
 }
 
 .card-content h3 {

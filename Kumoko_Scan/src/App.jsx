@@ -3,24 +3,29 @@ import Header from './componentes/Header/Header';
 import Home from './pages/Home/Home';
 import { Manga, CriarManga, Capitulos } from './pages/Manga';
 import { Livro, CriarLivro } from './pages/Livro';
-
+import Auth from './pages/Cadastro/Auth';
+import Perfil from './pages/Perfil';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
         
-        {/* Agora o React sabe exatamente quem são esses caras! */}
-        <Route path="/mangas" element={<Manga />} />
-        <Route path="/manga/novo" element={<CriarManga />} />
-        <Route path="/manga/:mangaId/capitulos" element={<Capitulos />} />
-        <Route path="/livros" element={<Livro />} />
-        <Route path="/livro/novo" element={<CriarLivro />} />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/mangas" element={<Manga />} />
+          <Route path="/manga/novo" element={<CriarManga />} />
+          <Route path="/manga/:mangaId/capitulos" element={<Capitulos />} />
+          <Route path="/livros" element={<Livro />} />
+          <Route path="/livro/novo" element={<CriarLivro />} />
+          <Route path="/auth" element={<Auth />} />
+
+          <Route path="/perfil" element={<Perfil />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

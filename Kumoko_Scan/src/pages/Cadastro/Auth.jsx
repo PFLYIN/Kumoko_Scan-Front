@@ -1,105 +1,138 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../../service/api';
+import { AuthContext } from '../../context/AuthContext';
 import './Auth.css';
 
 function Auth() {
-  // Controla qual aba está ativa ('login' ou 'register')
   const [activeTab, setActiveTab] = useState('login');
 
-  const handleSubmit = (e) => {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
+
+  const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aqui entrará a lógica do seu back-end futuramente!
-    console.log(`Enviando formulário de ${activeTab}`);
+
+    if (activeTab === 'login') {
+      try {
+        const response = await api.post('/login', { email, senha });
+
+        login(response.data.user, response.data.token);
+
+        alert(`Bem-vindo(a) de volta, ${response.data.user.nome}!`);
+        navigate('/mangas');
+
+      } catch (error) {
+        if (error.response?.status === 401) return alert('Senha incorreta!');
+        if (error.response?.status === 404) return alert('E-mail não cadastrado!');
+        alert('Erro no servidor ao tentar logar.');
+      }
+
+    } else {
+      if (senha !== confirmarSenha) return alert('As senhas não coincidem!');
+
+      try {
+        await api.post('/register', { nome, email, cpf, senha });
+
+        alert('Usuário criado com sucesso! Por favor, faça seu login.');
+
+        setSenha('');
+        setConfirmarSenha('');
+        setCpf('');
+        setActiveTab('login');
+
+      } catch (error) {
+        if (error.response?.data?.error) {
+          alert(error.response.data.error);
+        } else {
+          alert('Erro ao registrar usuário.');
+        }
+      }
+    }
   };
 
   return (
     <main className="auth-main">
       <div className="auth-wrapper">
         
-        {/* Lado Esquerdo - Boas-vindas */}
         <section className="auth-left">
           <div className="brand">
-            {/* Se tiver a logo em imagem, coloque o import aqui. Por enquanto, usei texto elegante */}
-            <h1 className="logo-text">
-              KUMOKO<span>SCAN</span>
-            </h1>
+            <h1 className="logo-text">KUMOKO<span>SCAN</span></h1>
           </div>
           <header className="welcome">
             <h2>Bem-vindo de volta</h2>
-            <p>Acesse sua conta para salvar suas obras favoritas, acompanhar seus capítulos e interagir com a comunidade.</p>
+            <p>Acesse sua conta para gerenciar seu acervo, capítulos e volumes.</p>
           </header>
         </section>
 
-        {/* Lado Direito - O Card de Login/Cadastro */}
         <section className="auth-right">
           <div className="auth-card">
             
-            {/* Abas de Navegação */}
             <div className="tabs">
               <button 
                 className={`tab-btn ${activeTab === 'login' ? 'is-active' : ''}`} 
-                onClick={() => setActiveTab('login')}
-                type="button"
+                onClick={() => setActiveTab('login')} type="button"
               >
                 Entrar
               </button>
               <button 
                 className={`tab-btn ${activeTab === 'register' ? 'is-active' : ''}`} 
-                onClick={() => setActiveTab('register')}
-                type="button"
+                onClick={() => setActiveTab('register')} type="button"
               >
                 Cadastrar
               </button>
             </div>
 
-            {/* CONTEÚDO DA ABA LOGIN */}
+            {/* ABA DE LOGIN */}
             {activeTab === 'login' && (
               <div className="tab-panel">
                 <h3 className="card-title">Acessar Conta</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="field">
-                    <input type="email" name="email" placeholder="E-mail" required />
+                    <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} required />
                   </div>
                   <div className="field">
-                    <input type="password" name="senha" placeholder="Senha" required />
+                    <input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required />
                   </div>
                   <button type="submit" className="btn-primary">Entrar</button>
                 </form>
               </div>
             )}
 
-            {/* CONTEÚDO DA ABA CADASTRO */}
+            {/* ABA DE CADASTRO */}
             {activeTab === 'register' && (
               <div className="tab-panel">
                 <h3 className="card-title">Criar nova conta</h3>
                 <form onSubmit={handleSubmit}>
                   <div className="field">
-                    <input type="text" name="nome" placeholder="Nome de usuário" required />
+                    <input type="text" placeholder="Nome completo" value={nome} onChange={e => setNome(e.target.value)} required />
                   </div>
                   <div className="field">
-                    <input type="email" name="email" placeholder="E-mail" required />
+                    <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} required />
                   </div>
                   <div className="field">
-                    <input type="password" name="senha" placeholder="Senha" required />
+                    <input type="text" placeholder="CPF (Apenas números)" value={cpf} onChange={e => setCpf(e.target.value)} maxLength="11" required />
                   </div>
                   <div className="field">
-                    <input type="password" name="confirmar_senha" placeholder="Confirmar senha" required />
+                    <input type="password" placeholder="Senha (Mín. 8 caracteres)" value={senha} onChange={e => setSenha(e.target.value)} required />
+                  </div>
+                  <div className="field">
+                    <input type="password" placeholder="Confirmar senha" value={confirmarSenha} onChange={e => setConfirmarSenha(e.target.value)} required />
                   </div>
                   <button type="submit" className="btn-primary">Cadastrar</button>
                 </form>
               </div>
             )}
 
-            {/* Divisor e Botão do Google (Fica fora dos forms para aparecer em ambos) */}
-            <div className="auth-separator"><span>ou</span></div>
-            
-            <button type="button" className="google-btn">
-              <img src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg" alt="Google Logo" />
-              <span>Continuar com o Google</span>
-            </button>
-
           </div>
         </section>
-
       </div>
     </main>
   );
